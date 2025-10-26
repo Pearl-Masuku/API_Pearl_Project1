@@ -19,8 +19,8 @@ public class LoginTest {
 
         // Create request payload
         String requestBody = "{\n" +
-                "    \"email\": \"nkosi@gmail.com\",\n" +
-                "    \"password\": \"12345678\"\n" +
+                "    \"email\": \"mnm@gmail.com\",\n" +
+                "    \"password\": \"mhlaba2024\"\n" +
                 "}";
 
         // Perform POST request
@@ -48,8 +48,8 @@ public class LoginTest {
                 .baseUri("https://www.ndosiautomation.co.za")
                 .header("Content-Type", "application/json")
                 .body("{\n" +
-                        "    \"email\": \"nkosi@gmail.com\",\n" +
-                        "    \"password\": \"12345678\"\n" +
+                        "    \"email\": \"mnm@gmail.com\",\n" +
+                        "    \"password\": \"mhlaba2024\"\n" +
                         "}")
                 .when()
                 .post("/API/login")
