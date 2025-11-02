@@ -1,6 +1,10 @@
 package PayloadBuilder;
 
+import com.fasterxml.jackson.databind.util.JSONPObject;
 import org.json.simple.JSONObject;
+import org.testng.annotations.Test;
+
+import java.sql.PreparedStatement;
 
 public class NdosiAPIPayloadBuilder {
 
@@ -23,6 +27,16 @@ public class NdosiAPIPayloadBuilder {
 
         return jsonObject;
     }
+
+    //Update User Payload
+    public  static JSONObject UpdateUserPayload(String fullName, String email) {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("full_name", fullName);
+        jsonObject.put("email", email);
+
+        return jsonObject;
+    }
+
 
 
 }
