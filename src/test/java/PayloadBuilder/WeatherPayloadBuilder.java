@@ -1,14 +1,12 @@
 package PayloadBuilder;
 
-import com.fasterxml.jackson.databind.util.JSONPObject;
 import org.json.simple.JSONObject;
-import org.testng.annotations.Test;
 
-import java.sql.PreparedStatement;
 
 public class WeatherPayloadBuilder {
 
-    public static JSONObject registerPayload(String external_id, String stationName,double latitude,double longitude, int altitude) {
+//Register Station Payload
+    public static JSONObject registerStationPayload(String external_id, String stationName, double latitude, double longitude, int altitude) {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("external_id", external_id);
         jsonObject.put("name", stationName);
@@ -18,16 +16,5 @@ public class WeatherPayloadBuilder {
 
         return jsonObject;
     }
-
-    //Update User Payload
-    public  static JSONObject UpdateUserPayload(String fullName, String email) {
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("full_name", fullName);
-        jsonObject.put("email", email);
-
-        return jsonObject;
-    }
-
-
 
 }

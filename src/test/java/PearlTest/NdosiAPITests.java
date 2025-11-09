@@ -3,14 +3,16 @@ package PearlTest;
 import io.qameta.allure.Description;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 
-import static Common.commonTestData.create_success_status_code;
-import static Common.commonTestData.success_status_code;
-import static RequestBuilder.NdosiAPIRequestBuilder.loginResponse;
-import static RequestBuilder.NdosiAPIRequestBuilder.registerResponse;
+import java.util.UUID;
+
+import static Common.commonTestData.*;
+import static RequestBuilder.NdosiAPIRequestBuilder.*;
+import static RequestBuilder.NdosiAPIRequestBuilder.updateUserProfileResponse;
 import static Utils.generateTestData.*;
 import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.equalTo;
 
 
 @Test
@@ -49,9 +51,24 @@ public class NdosiAPITests {
                 assertThat().
                 statusCode(success_status_code);
 
-        token = loginResponse(email, "12345678").jsonPath().getString("data.token");
 
-        System.out.println("Retrieved Token: " + token);
+    }
+
+    //Update User Profile Test
+    @Description("As a user i want to be able to update my profile on Ndosi API")
+    @Test(dependsOnMethods = "loginTests")
+    public void updateProfileTests() {
+        updateUserProfileResponse( fullName, email).
+                then().
+                log().all().
+                assertThat().
+                statusCode(success_status_code).
+                body(containsString("data")).
+                body("success",equalTo(true)).
+                body("message",equalTo("Profile updated successfully")).
+                body("data.FirsName",equalTo(newFirstName)).
+                body("data.LastName",equalTo(newLastName)).
+                body("data.updatedAt",notNullValue());
     }
 
     //Get Specific User Profile Test
