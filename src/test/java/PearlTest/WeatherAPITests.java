@@ -33,43 +33,25 @@ public class WeatherAPITests {
     @Description("As a user i want to be able to register Stations on Weather API")
     @Test
     public void registerTests() {
-        registerStations(generateTestData.testGenerateFakerId(), "MASUKU", 37.76, -122.43, 150).
+        registerStations(generateTestData.testGenerateFakerId(), generateTestData.generateStationName(),latitude, longitude, altitude).
                 then().
                 log().all().
                 assertThat().
-                statusCode(create_success_status_code);
-//                    body("data.firstName",equalTo(firstName)).
-//                    body("data.lastName",equalTo(lastName)).
-//                    body("data.id",notNullValue()).
-//                    body("data.createdAt",notNullValue());
+                statusCode(create_success_status_code).
+                body("ID",notNullValue()).
+                body("createdAt",notNullValue()).
+                body("updated_at",notNullValue()).
+                body("user_id",notNullValue()).
+                body("external_id",equalTo(generateTestData.testGenerateFakerId())).
+                body("name",equalTo(generateTestData.generateStationName())).
+                body("latitude",equalTo(latitude.floatValue())).
+                body("longitude",equalTo(longitude.floatValue())).
+                body("altitude",equalTo(altitude)).
+                body("rank",notNullValue()).
+                body("source_type",notNullValue());
+
     }
 
-
-//
-//        // Check required keys
-//        assertTrue(payload.containsKey("ID"));
-//        assertTrue(payload.containsKey("user_id"));
-//        assertTrue(payload.containsKey("created_at"));
-//        assertTrue(payload.containsKey("updated_at"));
-//        assertTrue(payload.containsKey("external_id"));
-//        assertTrue(payload.containsKey("name"));
-//        assertTrue(payload.containsKey("latitude"));
-//        assertTrue(payload.containsKey("longitude"));
-//        assertTrue(payload.containsKey("altitude"));
-//
-//        // Check values
-//        assertEquals(externalId, payload.get("external_id"));
-//        assertEquals(stationName, payload.get("name"));
-//        assertEquals(latitude, (double) payload.get("latitude"), 0.0001);
-//        assertEquals(longitude, (double) payload.get("longitude"), 0.0001);
-//        assertEquals(altitude, (int) payload.get("altitude"));
-//
-//        // Check ID and timestamps are non-empty strings
-//        assertNotNull(payload.get("ID"));
-//        assertNotNull(payload.get("user_id"));
-//        assertNotNull(payload.get("created_at"));
-//        assertNotNull(payload.get("updated_at"));
-//    }
 
 
 }
