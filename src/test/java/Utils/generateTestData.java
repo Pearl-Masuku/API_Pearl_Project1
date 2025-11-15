@@ -42,8 +42,9 @@ public class generateTestData {
 
     }
 
-    public static Double latitude = Double.valueOf(faker.address().latitude());
-    public static Double longitude = Double.valueOf(faker.address().longitude());
+    //public static double latitude = faker.address().latitude();
+    public static float latitude = Float.parseFloat(faker.address().latitude());
+    public static float longitude = Float.parseFloat(faker.address().longitude());
     public static Integer altitude = faker.number().numberBetween(50, 500);
 
 

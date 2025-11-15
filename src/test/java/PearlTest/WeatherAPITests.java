@@ -33,19 +33,24 @@ public class WeatherAPITests {
     @Description("As a user i want to be able to register Stations on Weather API")
     @Test
     public void registerTests() {
-        registerStations(generateTestData.testGenerateFakerId(), generateTestData.generateStationName(),latitude, longitude, altitude).
+        String externalId = generateTestData.testGenerateFakerId();
+        String stationName = generateTestData.generateStationName();
+        float latitude = generateTestData.latitude;
+        float longitude = generateTestData.longitude;
+        Integer altitude = generateTestData.altitude;
+        registerStations(externalId, stationName,latitude, longitude, altitude).
                 then().
                 log().all().
                 assertThat().
                 statusCode(create_success_status_code).
                 body("ID",notNullValue()).
-                body("createdAt",notNullValue()).
+                body("created_at",notNullValue()).
                 body("updated_at",notNullValue()).
                 body("user_id",notNullValue()).
-                body("external_id",equalTo(generateTestData.testGenerateFakerId())).
-                body("name",equalTo(generateTestData.generateStationName())).
-                body("latitude",equalTo(latitude.floatValue())).
-                body("longitude",equalTo(longitude.floatValue())).
+                body("external_id",equalTo(externalId)).
+                body("name",equalTo(stationName)).
+                body("latitude",equalTo(latitude)).
+                body("longitude",equalTo(longitude)).
                 body("altitude",equalTo(altitude)).
                 body("rank",notNullValue()).
                 body("source_type",notNullValue());
