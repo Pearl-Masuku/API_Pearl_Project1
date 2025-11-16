@@ -1,5 +1,6 @@
 package RequestBuilder;
 
+import Common.commonTestData;
 import io.restassured.response.Response;
 
 import static Common.BasePaths.*;
@@ -7,14 +8,14 @@ import static PayloadBuilder.WeatherPayloadBuilder.registerStationPayload;
 import static PayloadBuilder.WeatherPayloadBuilder.updateStationPayload;
 import static io.restassured.RestAssured.given;
 
-public class WeatherRequestBuilder {
+public class WeatherRequestBuilder extends commonTestData {
     public static String stationID;
 
     public static Response registerStations(String external_id, String stationName,float latitude,float longitude, int altitude) {
         Response response =  given()
                 .baseUri(WeatherBaseURl)
                 .basePath("/data/3.0/stations")
-                .queryParam("appid", "91fff73dbb4e35034699d5cbe7e30228")
+                .queryParam("appid",api_KEY)
                 .contentType("application/json")
                 .body(registerStationPayload(external_id, stationName, latitude, longitude, altitude))
                 .log().all()
@@ -32,7 +33,7 @@ public class WeatherRequestBuilder {
         return given().
                 baseUri(WeatherBaseURl).
                 basePath("/data/3.0/stations/" + stationID).
-                queryParam("appid", "91fff73dbb4e35034699d5cbe7e30228").
+                queryParam("appid",api_KEY).
                 contentType("application/json").
                 //header("Authorization", "Bearer " + apiToken).
                 body(updateStationPayload(newExternal_id, newStationName,newLatitude,newLongitude,newAltitude)).
@@ -48,12 +49,42 @@ public class WeatherRequestBuilder {
         return given().
                 baseUri(WeatherBaseURl).
                 basePath("/data/3.0/stations/" + stationID).
-                queryParam("appid", "91fff73dbb4e35034699d5cbe7e30228").
+                queryParam("appid",api_KEY).
                 contentType("application/json").
                 log().all().
                 get().
                 then().
                 log().all().
                 extract().response();
+    }
+
+    // Delete Weather Station API Request
+    public static Response deleteStationResponse() {
+        return given()
+                .baseUri(WeatherBaseURl)
+                .basePath("/data/3.0/stations/" + stationID)
+                .queryParam("appid", api_KEY)
+                .contentType("application/json")
+                .log().all()
+                .when()
+                .delete()
+                .then()
+                .log().all()
+                .extract().response();
+    }
+
+    // Delete deleted Weather Station API Request
+    public static Response deleteDeletedStationResponse() {
+        return given()
+                .baseUri(WeatherBaseURl)
+                .basePath("/data/3.0/stations/" + stationID)
+                .queryParam("appid", api_KEY)
+                .contentType("application/json")
+                .log().all()
+                .when()
+                .delete()
+                .then()
+                .log().all()
+                .extract().response();
     }
 }

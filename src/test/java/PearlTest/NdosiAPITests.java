@@ -1,11 +1,10 @@
 package PearlTest;
 
 import io.qameta.allure.Description;
+import org.testng.annotations.*;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
-import org.testng.annotations.*;
 
-import java.util.UUID;
 
 import static Common.commonTestData.*;
 import static RequestBuilder.NdosiAPIRequestBuilder.*;
@@ -71,23 +70,5 @@ public class NdosiAPITests {
                 body("data.updatedAt",notNullValue());
     }
 
-    //Get Specific User Profile Test
-   /* @Description("As a user i want to be able to get my profile from Ndosi API")
-    @Test(priority = 3)
-    public void getProfileTests() {
-        // Capture the login response so we can inspect the body and avoid calling the API twice
-        Response loginResp = loginResponse(email, "12345678");
-        // The API returns the token nested under `data.token` according to the README/example
-        String token = loginResp.jsonPath().getString("data.token");
-        // Fail fast with a helpful message if the token is missing
-        Assert.assertNotNull(token, "Login response did not contain a token. Response body: " + loginResp.asString());
-
-        getProfileResponse(token).
-                then().
-                log().all().
-                assertThat().
-                statusCode(success_status_code);
-
-    }*/
 
 }

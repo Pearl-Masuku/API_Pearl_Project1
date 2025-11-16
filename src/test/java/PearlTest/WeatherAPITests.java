@@ -4,7 +4,8 @@ import Utils.generateTestData;
 import io.qameta.allure.Description;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
-//import org.testng.annotations.Test;
+import org.testng.annotations.*;
+import org.testng.annotations.Test;
 
 import static Common.commonTestData.create_success_status_code;
 import static Common.commonTestData.success_status_code;
@@ -53,7 +54,7 @@ public class WeatherAPITests {
 
     //Get Station Test
     @Description("As a user i want to be able to get registered Stations on Weather API")
-    @Test
+    @Test (dependsOnMethods = "registerTests")
     public void getStationsTests() {
         getStationResponse().
                 then().
@@ -72,9 +73,9 @@ public class WeatherAPITests {
 
     }
 
-    //Update Test
+    //Update Station Test
     @Description("As a user i want to be able to update Stations on Weather API")
-    @Test
+    @Test (dependsOnMethods = "getStationsTests")
     public void updateTests() {
         String newExternalId = generateTestData.testGenerateNewFakerId();
         String newStationName = generateTestData.generateNewStationName();
@@ -96,6 +97,28 @@ public class WeatherAPITests {
                 body("altitude",equalTo(newAltitude)).
                 body("rank",notNullValue());
 
+    }
+
+    //Delete Station Test
+    @Description("As a user i want to be able to delete registered Stations on Weather API")
+    @Test (dependsOnMethods = "updateTests")
+    public void delStationsTests() {
+        deleteStationResponse().
+                then().
+                log().all().
+                assertThat().
+                statusCode(no_content_status_code);
+    }
+
+    @Test (dependsOnMethods = "delStationsTests")
+    @Description("As a user I want to see error when deleting a non-existent Station")
+    public void delNonExistentStationTest() {
+        deleteDeletedStationResponse()
+                .then()
+                .log().all()
+                .assertThat()
+                .statusCode(not_found_status_code).
+                body("message",equalTo("Station not found"));
     }
 
 
