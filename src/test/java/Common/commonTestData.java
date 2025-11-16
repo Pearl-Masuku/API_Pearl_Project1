@@ -7,4 +7,6 @@ public class commonTestData {
     public static int bad_request_status_code = 400;
     public static int create_success_status_code = 201;
 
+    public static String stationID = "http://api.openweathermap.org";
+
 }
