@@ -28,6 +28,34 @@ public class WeatherRequestBuilder extends commonTestData {
         return response;
     }
 
+    // Get registered Weather Station API Request
+    public static Response getStationResponse() {
+        return given().
+                baseUri(WeatherBaseURl).
+                basePath("/data/3.0/stations/" + stationID).
+                queryParam("appid",api_KEY).
+                contentType("application/json").
+                log().all().
+                get().
+                then().
+                log().all().
+                extract().response();
+    }
+
+    // [NEGATIVE] Get Deleted Weather Station API Request
+    public static Response getDeletedResponse() {
+        return given().
+                baseUri(WeatherBaseURl).
+                basePath("/data/3.0/stations/" + stationID).
+                queryParam("appid",api_KEY).
+                contentType("application/json").
+                log().all().
+                get().
+                then().
+                log().all().
+                extract().response();
+    }
+
     // Update the Weather Station API Request
     public static Response updateStationResponse(String newExternal_id, String newStationName,float newLatitude,float newLongitude, int newAltitude) {
         return given().
@@ -44,19 +72,7 @@ public class WeatherRequestBuilder extends commonTestData {
                 extract().response();
     }
 
-    // Get registered Weather Station API Request
-    public static Response getStationResponse() {
-        return given().
-                baseUri(WeatherBaseURl).
-                basePath("/data/3.0/stations/" + stationID).
-                queryParam("appid",api_KEY).
-                contentType("application/json").
-                log().all().
-                get().
-                then().
-                log().all().
-                extract().response();
-    }
+
 
     // Delete Weather Station API Request
     public static Response deleteStationResponse() {
@@ -73,7 +89,7 @@ public class WeatherRequestBuilder extends commonTestData {
                 .extract().response();
     }
 
-    // Delete deleted Weather Station API Request
+    // [NEGATIVE] Delete deleted Weather Station API Request
     public static Response deleteDeletedStationResponse() {
         return given()
                 .baseUri(WeatherBaseURl)

@@ -105,11 +105,23 @@ public class WeatherAPITests {
                 .statusCode(no_content_status_code);
     }
 
-    // 🔹 Delete Non-Existent Station Test
+    // Delete Non-Existent Station Test
     @Description("As a user I want to see error when deleting a non-existent Station")
     @Test(dependsOnMethods = "delStationsTests")
     public void delNonExistentStationTest() {
         deleteDeletedStationResponse()
+                .then()
+                .log().all()
+                .assertThat()
+                .statusCode(not_found_status_code)
+                .body("message", equalTo("Station not found"));
+    }
+
+    // Get Deleted Station Test
+    @Description("As a user I want to see error when deleting a non-existent Station")
+    @Test(dependsOnMethods = "delNonExistentStationTest")
+    public void getDeletedStationTest() {
+        getDeletedResponse()
                 .then()
                 .log().all()
                 .assertThat()
